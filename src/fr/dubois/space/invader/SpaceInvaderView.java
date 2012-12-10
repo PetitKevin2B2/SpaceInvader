@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.example.android.snake.SnakeView;
+import com.example.android.snake.SnakeView.RefreshHandler;
+
 
 
 import android.content.Context;
@@ -61,6 +64,11 @@ public class SpaceInvaderView extends View {
 		paint.setTextSize(36);
 		paint.setTextAlign(Paint.Align.CENTER);
 		text = "Texte";
+		
+		Bitmap alien = loadImage (R.drawable.alien1);
+		this.alien= new Alien(alien, 100, 100);
+		
+		init.update();
 		
 	}
 
@@ -122,7 +130,7 @@ public class SpaceInvaderView extends View {
 		this.setMeasuredDimension(x,y);
 	}
 	
-	  private RefreshHandler mRedrawHandler = new RefreshHandler();
+	 private RefreshHandler mRedrawHandler = new RefreshHandler();
 
 	    class RefreshHandler extends Handler {
 
@@ -132,10 +140,13 @@ public class SpaceInvaderView extends View {
 	            SpaceInvaderView.this.invalidate();
 	        }
 
-	    }
-
-		public void update() {
-			// TODO Auto-generated method stub
-			
-		}
+	        public void sleep(long delayMillis) {
+	        	this.removeMessages(0);
+	            sendMessageDelayed(obtainMessage(0), delayMillis);
+	        }
+	    };
+	    
+	    	public void uptade(){
+	    		mRedrawHandler.sleep(40);
+	    	}
 }
